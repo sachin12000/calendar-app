@@ -1,0 +1,2 @@
+# Firebase hosting assets
+Files in this directory will be deployed to Firebase Hosting when the deploy command is run. This README.md file *WILL NOT* be deployed as it is included in *hosting.ignore* list in *firebase.json*.
