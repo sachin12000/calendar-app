@@ -26,7 +26,6 @@ module.exports = (mode) => {
     const htmlPlugin = new HtmlWebpackPlugin({
         title: "Calendar",
         template: "./src/client/index.ejs",
-        minify: false,
         templateParameters: {
             devCss
         }
