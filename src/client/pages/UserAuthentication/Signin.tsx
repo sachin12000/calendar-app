@@ -55,6 +55,7 @@ function SignIn(props: SigninProps, ref: RefObject<HTMLElement>) {
           props.onSignIn();
       }).catch(error => {
         switch (error.code) {
+          case 'auth/invalid-login-credentials':
           case 'auth/invalid-email':
           case 'auth/wrong-password':
           case 'auth/user-not-found':
