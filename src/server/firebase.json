@@ -3,12 +3,12 @@
     "rules": "firestore.rules"
   },
   "hosting": {
-    "public": "../../build-prod",
+    "public": "./public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "../../build-prod/README.md"
+      "./public/README.md"
     ],
     "rewrites": [
       {
