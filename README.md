@@ -4,7 +4,7 @@ Calendar app is an app that allows the its users to manage their events in a has
 Built with React, MUI, Typescript and Firebase using the best software development practices.
 
 # How to set configuration values
-- Development build should work with default values. But they can be modified if necessary.
+- Development build should work with the default values. But they can be modified if necessary.
   - The *webpack-dev-server* can acceessed at `localhost:3000` and the Firebase emulators also run at `localhost`
 - For the production build to work the *production* object in *configs.json* must be populated with correct values.
 - The following instructions describe how to modify settings if neccessary
