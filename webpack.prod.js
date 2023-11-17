@@ -3,6 +3,7 @@ const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const bundleAnalyzerPlugin = new BundleAnalyzerPlugin({
+  analyzerHost: 'localhost',
   analyzerPort: 4001,
   openAnalyzer: false
 });
