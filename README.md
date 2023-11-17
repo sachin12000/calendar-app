@@ -38,8 +38,8 @@ Note: Only the front-end can be built. Firebase back-end doesn't require buildin
 - The front-end of the app is hosted in Firebase Hosting.
 - Build the production build by running the command `npm run build:prod`
 - Copy the resulting files from *build-prod* to *./src/server/public*
-- Run the command `npm run deploy hosting`
+- Run the command `npm run deploy:hosting`
 ### Deploy Firestore rules
 - Note: Only deploy Firestore rules if they were modified.
 - The security rules for the Firestore are stored in *./src/server/firestore.rules*
-- Deploy the security rules by running the command `npm run deploy firestore`.
+- Deploy the security rules by running the command `npm run deploy:firestore`.

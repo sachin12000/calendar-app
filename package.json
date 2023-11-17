@@ -7,7 +7,9 @@
     "emulators": "cd ./src/server && firebase emulators:start --import=dummy_data --only=auth,firestore",
     "client": "npx webpack-dev-server --config webpack.config.js --mode development",
     "build:dev": "webpack --config webpack.config.js --mode development",
-    "build:prod": "webpack --config webpack.config.js --mode production"
+    "build:prod": "webpack --config webpack.config.js --mode production",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:firestore": "firebase deploy --only firestore:rules"
   },
   "repository": {
     "type": "git",
