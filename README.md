@@ -33,6 +33,10 @@ Note: Only the front-end can be built. Firebase back-end doesn't require buildin
 - Run `npm run build:prod` to build the production build. The output files will be placed in *build-prod* of the root directory.
   - IMPORTANT: Make sure to populate *production* object in *configs.js* with the correct values for the production build.
 
+# Bundle analyzer
+- The production build is configured to run *BundleAnalyzerPlugin*. This plugin can be used to analyze space usage by different node packages in the final build.
+- The bundle analyzer's UI can be accessed at the `localhost:4001` after the build completes.
+
 # How to deploy
 ### Deploy Firebase Hosting
 - The front-end of the app is hosted in Firebase Hosting.
