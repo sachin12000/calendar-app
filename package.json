@@ -8,8 +8,8 @@
     "client": "npx webpack-dev-server --config webpack.config.js --mode development",
     "build:dev": "webpack --config webpack.config.js --mode development",
     "build:prod": "webpack --config webpack.config.js --mode production",
-    "deploy:hosting": "firebase deploy --only hosting",
-    "deploy:firestore": "firebase deploy --only firestore:rules"
+    "deploy:hosting": "cd ./src/server && firebase deploy --only hosting",
+    "deploy:firestore": "cd ./src/server && firebase deploy --only firestore:rules"
   },
   "repository": {
     "type": "git",
