@@ -1,5 +1,5 @@
 /**
- * Page that handles the signing in existing users or signing up new users
+ * Page that handles the signing in existing users and signing up new users
  */
 
 import { useState, useRef } from "react";
@@ -30,14 +30,14 @@ export default () => {
         overflow: 'hidden'
     }}
     >
-        <Slide in={displaySignInPage} direction='right' container={containerRef.current} timeout={500} easing={{
+        <Slide in={displaySignInPage} direction='left' container={containerRef.current} timeout={500} easing={{
             enter: theme.transitions.easing.sharp,
             exit: theme.transitions.easing.sharp
         }}
         >
             <SignIn onClickSignUp={onClickSignUp} />
         </Slide>
-        <Slide in={!displaySignInPage} direction='left' container={containerRef.current} timeout={500} easing={{
+        <Slide in={!displaySignInPage} direction='right' container={containerRef.current} timeout={500} easing={{
             enter: theme.transitions.easing.sharp,
             exit: theme.transitions.easing.sharp
         }}
