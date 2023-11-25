@@ -44,6 +44,10 @@ module.exports = (mode) => {
                     use: 'ts-loader',
                     exclude: /node_modules/,
                 },
+                {
+                    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                    type: 'asset/resource',
+                }
             ],
         },
         resolve: {
@@ -54,9 +58,9 @@ module.exports = (mode) => {
             htmlPlugin
         ],
         devServer: {
-            // static: {
-            //     directory: path.join(__dirname, 'public'),
-            // },
+            static: {
+                directory: path.join(__dirname, 'public'),
+            },
             compress: true,
             port: 3000,
         },

@@ -14,6 +14,7 @@
         "sourceMap": true
     },
     "include": [
-        "./src/client"
+        "./src/client",
+        "./src/client/custom.d.ts"
     ]
 }
