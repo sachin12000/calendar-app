@@ -8,6 +8,12 @@
     <%= htmlWebpackPlugin.options.title %>
   </title>
   <%= devCss %>
+  <style>
+    @font-face {
+      font-family: 'Montserrat';
+      src: url('<%= require("./assets/Montserrat-VariableFont_wght.ttf") %>') format('truetype');
+    }
+  </style>
 </head>
 
 <body style="height: 100vh;">
