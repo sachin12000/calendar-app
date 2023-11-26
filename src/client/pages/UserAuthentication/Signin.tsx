@@ -1,4 +1,4 @@
-import { useState, forwardRef, RefObject } from 'react';
+import { useState, forwardRef, RefObject, CSSProperties } from 'react';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,13 +7,30 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import IconButton from '@mui/material/IconButton';
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
+
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '../../firebaselogic';
 
+const titleHeader =
+  <Typography
+    component="h1"
+    variant="h5"
+    flexGrow={{ xs: "1", md: "0" }}
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+  >
+    Sign In
+  </Typography>;
+
 interface SigninProps {
   onSignIn?: () => void
-  onClickSignUp: () => void
+  isMobile: boolean  // displays a back button to go back to the landing page
+  onClickBack: () => void // triggered when the back button is pressed. only used in mobile view
+  style?: CSSProperties
 }
 
 function SignIn(props: SigninProps, ref: RefObject<HTMLElement>) {
@@ -21,7 +38,6 @@ function SignIn(props: SigninProps, ref: RefObject<HTMLElement>) {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [loginError, setLoginError] = useState<string | null>(null);  // Login error that is not specific to email or password
   const [loginInProgress, setLoginInProgress] = useState<boolean>(false);
-
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,11 +90,6 @@ function SignIn(props: SigninProps, ref: RefObject<HTMLElement>) {
     }
   };
 
-  const onClickSignUp = (e: React.MouseEvent) => {
-    e.preventDefault();
-    props.onClickSignUp();
-  }
-
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate ref={ref} sx={{
       gridRow: 1,
@@ -86,11 +97,18 @@ function SignIn(props: SigninProps, ref: RefObject<HTMLElement>) {
       width: '100%',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
-    }}>
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
+      justifyContent: 'center',
+    }} style={props.style}>
+      {props.isMobile ?
+        <Box display="flex">
+          <IconButton aria-label='back to main page' onClick={props.onClickBack}>
+            <ArrowBackSharpIcon />
+          </IconButton>
+          {titleHeader}
+        </Box>
+        :
+        titleHeader
+      }
       {loginError ?
         <Typography component="span" variant="subtitle2" sx={{
           color: 'text.error',
@@ -141,9 +159,6 @@ function SignIn(props: SigninProps, ref: RefObject<HTMLElement>) {
           <Link href="#" variant="body2">
             Forgot Password?
           </Link>
-        </Grid>
-        <Grid item>
-          <Link href="/signup" variant="body2" onClick={onClickSignUp}>SignUp</Link>
         </Grid>
       </Grid>
     </Box>

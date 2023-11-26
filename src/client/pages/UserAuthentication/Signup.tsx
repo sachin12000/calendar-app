@@ -1,18 +1,31 @@
-import { useState, forwardRef, memo, RefObject } from 'react';
+import { useState, forwardRef, memo, RefObject, CSSProperties } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+
 import IconButton from '@mui/material/IconButton';
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 
 import { auth } from '../../firebaselogic';
 
 import { parseTextFieldInput } from '../../util';
+
+const titleHeader =
+  <Typography
+    component="h1"
+    variant="h5"
+    flexGrow={{ xs: "1", md: "0" }}
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+  >
+    Sign Up
+  </Typography>;
 
 // used by PasswordErrorsDisplay to keep track of which checks are passed/failed
 interface PasswordCheckType {
@@ -23,7 +36,9 @@ interface PasswordCheckType {
 
 interface SignUpProps {
   onSignUp?: () => void
-  onClickBack: () => void
+  isMobile: boolean  // displays a back button to go back to the landing page
+  onClickBack: () => void // triggered when the back button is pressed. only used in mobile view
+  style?: CSSProperties
 }
 
 function createPasswordCheckList(password: string): PasswordCheckType[] {
@@ -154,22 +169,24 @@ function SignUp(props: SignUpProps, ref: RefObject<HTMLElement>) {
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate ref={ref} sx={{
+    <Box component="form" onSubmit={handleSubmit} noValidate ref={ref} style={props.style} sx={{
       gridRow: 1,
       gridColumn: 1,
       width: '100%',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
+      justifyContent: 'center'
     }}>
-      <Box display="flex" alignItems="center" width="100%">
-        <IconButton aria-label='back to signin' onClick={props.onClickBack}>
-          <ArrowBackSharpIcon />
-        </IconButton>
-        <Typography component="h1" variant="h5" flexGrow={1} display="flex" justifyContent="center">
-          Sign up
-        </Typography>
-      </Box>
+      {props.isMobile ?
+        <Box display="flex">
+          <IconButton aria-label='back to main page' onClick={props.onClickBack}>
+            <ArrowBackSharpIcon />
+          </IconButton>
+          {titleHeader}
+        </Box>
+        :
+        titleHeader
+      }
       {signUpError ?
         <Typography component="span" variant="subtitle2" sx={{
           color: 'text.error',
