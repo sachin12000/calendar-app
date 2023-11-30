@@ -87,3 +87,10 @@ export function getDateSuffix(date: number): string {
     else
         return 'th';
 }
+
+// fetches the demo data from /demo.json for the app demo feature
+export async function fetchDemoData(): Promise<CalendarEvent[]> {
+    const response = await fetch("/demo.json");
+    const events: CalendarEvent[] = await response.json();
+    return events;
+}

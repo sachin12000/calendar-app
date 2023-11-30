@@ -2,8 +2,15 @@ const path = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const configs = require('./configs.js');
+
+const copyPlugin = new CopyWebpackPlugin({
+    patterns: [{
+        from: path.join(__dirname, 'src\\client\\assets\\demo.json'), to: ""  // copy the demo data to the build directory
+    }]
+})
 
 module.exports = (mode) => {
     let config;  // config that will be passed to the app through the DefinePlugin
@@ -59,7 +66,8 @@ module.exports = (mode) => {
         },
         plugins: [
             definePlugin,
-            htmlPlugin
+            htmlPlugin,
+            copyPlugin
         ],
         devServer: {
             static: {

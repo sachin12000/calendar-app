@@ -14,16 +14,15 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { SvgIconTypeMap } from '@mui/material';
 
 interface AppBarProps {
-    userName: string
+    userEmail: string
     Icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>  // icon form the mui library to be displayed on the app bar
     title?: string  // title to be displayed on the app bar
-    onClickAccount?: () => void  // account info click callback
     onClickLogout: () => void  // logout click callback
 }
 
 function ResponsiveAppBar(props: AppBarProps) {
-    const { userName, Icon, title: mainText = '', onClickLogout } = props;
-    const avatarText = userName.length > 0 ? userName[0].toUpperCase() : '?';
+    const { userEmail, Icon, title: mainText = '', onClickLogout } = props;
+    const avatarText = userEmail.length > 0 ? userEmail[0].toUpperCase() : '?';
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);  // stores the element that the user dropdown anchors on
 
     const handleOpenUserMenu = useCallback((event: MouseEvent<HTMLElement>) => {
@@ -79,9 +78,6 @@ function ResponsiveAppBar(props: AppBarProps) {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem>
-                                <Typography component="span" textAlign="center">Account</Typography>
-                            </MenuItem>
                             <MenuItem>
                                 <Typography component="span" onClick={onClickLogout} textAlign="center">Logout</Typography>
                             </MenuItem>

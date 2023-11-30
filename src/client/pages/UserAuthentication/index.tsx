@@ -2,19 +2,23 @@
  * Page that handles the signing in existing users and signing up new users
  */
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Box, Button, Typography, Fade } from '@mui/material';
 
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import PersonUsingComputer from '../../assets/person_using_computer.svg';
+import { authStateContext } from '../../contexts/auth';
 
 import SignIn from "./Signin";
 import SignUp from "./Signup";
 
+import PersonUsingComputer from '../../assets/person_using_computer.svg';
+
 export default () => {
-    const [mode, setMode] = useState<'signin' | 'signup' | null>(null);
+    const { setDemoMode } = useContext(authStateContext);
+
+    const [mode, setMode] = useState<'signin' | 'signup' | 'demo' | null>(null);
 
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -58,14 +62,23 @@ export default () => {
                 <Button
                     fullWidth
                     variant={mode == 'signin' ? "contained" : "outlined"}
-                    onClick={() => setMode('signin')}>
+                    onClick={() => setMode('signin')}
+                >
                     Sign In
                 </Button>
                 <Button
                     fullWidth
                     variant={mode == 'signup' ? "contained" : "outlined"}
-                    onClick={() => setMode('signup')}>
+                    onClick={() => setMode('signup')}
+                >
                     Sign Up
+                </Button>
+                <Button
+                    fullWidth
+                    variant={mode == 'demo' ? "contained" : "outlined"}
+                    onClick={() => {setDemoMode({ email: 'demoemailaddress@demo.demo' })}}
+                >
+                    Demo
                 </Button>
             </Box>
         </Box>

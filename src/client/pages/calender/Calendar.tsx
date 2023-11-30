@@ -5,9 +5,11 @@ import { appContext } from '../../contexts';
 
 import { compareDates, eventvalidation } from '../../../util';
 import { CalendarDate, CalendarEvent } from '../../../types';
+import { getFirstDateOfCalendar, fetchDemoData } from './util';
 
-import { generateDateArray, getFirstDateOfCalendar } from './util';
+import EventsManagerInterface from './eventsmanagerinterface';
 import EventsManager from './eventsmanager';
+import DemoEventsManager from './demoeventsmanager';
 
 import CalendarControls from './CalendarControls';
 import MonthlyView from './MonthlyView';
@@ -19,12 +21,14 @@ interface CalenderProps extends BoxProps {
     viewType?: 'yearly' | 'monthly' | 'weekly' | 'daily'
     initialDateToView?: CalendarDate
     weekStartingDay?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+    demoMode?: boolean  // indicates if the calendar is running in the demo mode
 }
 
 const Calender = (props: CalenderProps) => {
-    let { initialDateToView } = props;
+    let { initialDateToView, demoMode } = props;
 
     const { deviceType, utility } = useContext(appContext);
+
     const pushNotification = utility.notifications.push;
     const handleError = utility.handleError;
 
@@ -46,8 +50,9 @@ const Calender = (props: CalenderProps) => {
     // ref used to measure the size of the area that is available for the calendar
     const calendarViewRef = useRef<HTMLElement>({} as HTMLElement);
 
-    const eventsMangerRef = useRef(new EventsManager()); // create a ref for storing the events manager used for managing events
-    const eventsManager = eventsMangerRef.current;
+    // create a ref for storing the events manager both for demo and authenticated modes
+    const eventsManagerRef = useRef<EventsManagerInterface>(demoMode ? new DemoEventsManager([]) : new EventsManager());
+    let eventsManager = eventsManagerRef.current;
 
     // date string displayed along with the calendar
     const dateString = useMemo(() => {
@@ -89,7 +94,7 @@ const Calender = (props: CalenderProps) => {
     // retrives the events to fetch for the given dates range
     const getEventsToView = () => {
         // first check if all events for the range of dates to be displayed are available locally
-        let events = eventsManager.getEventsForRangeLocally(startingDate, endingDate);
+        const events = eventsManager.getEventsForRangeLocally(startingDate, endingDate);
         if (events) {
             // all events are available locally
             setEventsToDisplay(events);
@@ -109,7 +114,24 @@ const Calender = (props: CalenderProps) => {
         }
     }
 
-    // retrieve the events that needs to be displayed
+    // load the demo data if the app is running in the demo mode
+    useEffect(() => {
+        if (demoMode) {
+            setLoading(true);
+            fetchDemoData()
+                .then(demoEvents => {
+                    eventsManagerRef.current = new DemoEventsManager(demoEvents);
+                    eventsManager = eventsManagerRef.current;
+                    getEventsToView();
+                })
+                .catch(e => {
+                    handleError(e);
+                    setLoading(false);
+                });
+        }
+    }, []);
+
+    // retrieve the events that needs to be displayed when a new date is set to be viewed
     useEffect(() => {
         setLoading(true);
         getEventsToView();
@@ -118,7 +140,7 @@ const Calender = (props: CalenderProps) => {
     // callback that is called when an event on the calendar is clicked by the user
     const onClickCalendarItem = useCallback(
         (eventId: string) => setEventToView(eventsManager.getEventFromId(eventId)),
-        [eventsMangerRef.current]
+        [eventsManagerRef.current]
     );
 
     // use a layout effect for determining the space available to render the calednar

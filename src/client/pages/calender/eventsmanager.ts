@@ -18,6 +18,8 @@ import {
 } from "../../../util";
 import { getEventDiff } from './util';
 
+import EventsManagerInterface from './eventsmanagerinterface';
+
 const eventComparator = (date: CalendarDate, event: CalendarEvent) => compareDates(date, event.date);
 const compareTwoEvents = (e1: CalendarEvent, e2: CalendarEvent) => compareEventTimes(e1, e2);
 
@@ -27,7 +29,7 @@ enum RangeStateEnum {
     requested  // request to Firestore was made to fetch the events for the range
 }
 
-export default class EventsManager {
+export default class EventsManager implements EventsManagerInterface {
     // array to store events that were already fetched from Firestore the array if choronologically sorted
     private eventsArray: CalendarEvent[] = [];
 
@@ -125,7 +127,7 @@ export default class EventsManager {
             eventsArray.push({ ...event, id });
         } else {
             const index = this.getInsertionIndex(event);
-            this.eventsArray.splice(index, 0, {...event, id});
+            this.eventsArray.splice(index, 0, { ...event, id });
         }
     }
 
@@ -350,7 +352,6 @@ export default class EventsManager {
 
         if (!date && !startTime) {
             // the date or the start time of the event was not changed
-            // const { success, message } = await API.updateEvent(eventToBeUpdated, eventDiff);
             const { success, message } = await API.updateEvent(eventId, eventDiff);
             if (!success)
                 throw message;
@@ -372,7 +373,6 @@ export default class EventsManager {
             }
 
             // send the update request to the server
-            // const { success, message } = await API.updateEvent(eventToBeUpdated, eventDiff);
             const { success, message } = await API.updateEvent(eventId, eventDiff);
             if (!success)
                 throw message;
@@ -390,8 +390,6 @@ export default class EventsManager {
             }
         }
     }
-
-
 
     /**
     * Removes event specified by the event ID.
