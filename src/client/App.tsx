@@ -49,7 +49,7 @@ const App = () => {
                   position: 'fixed',
                   top: 'calc(100vh - 100px)',
                   left: 'calc(50vw - 100px)',
-                  zIndex: 100
+                  zIndex: 10000
                 }}>
                   <NotificationController />
                 </Box>
