@@ -45,10 +45,13 @@ const App = () => {
                 <AppBar userEmail={userEmail} Icon={CalendarMonthOutlinedIcon} title="Calendar" onClickLogout={onClickLogOut} />
                 <Calendar sx={{ flexGrow: 1 }} demoMode={Boolean(demoMode)} />
                 <Box sx={{
-                  width: '200px',
                   position: 'fixed',
-                  top: 'calc(100vh - 100px)',
-                  left: 'calc(50vw - 100px)',
+                  bottom: '0',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100vw',
+                  paddingBottom: '10px',
+                  pointerEvents: 'none'
                 }}>
                   <NotificationController />
                 </Box>

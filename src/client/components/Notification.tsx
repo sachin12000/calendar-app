@@ -32,6 +32,7 @@ const NotificationComponent = ({ notification, onFadeOut = () => { }, onClose = 
         <Alert
             severity={severity}
             onClose={onClose}
+            sx={{ pointerEvents: 'all' }}
         >
             {text}
         </Alert>
