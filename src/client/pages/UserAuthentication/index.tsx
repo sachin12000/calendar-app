@@ -20,6 +20,9 @@ export default () => {
 
     const [mode, setMode] = useState<'signin' | 'signup' | 'demo' | null>(null);
 
+    // used for fading in the svg image after main area is faded in
+    const [mainFadeInDone, setMainFadeInDone] = useState<boolean>(false);
+
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -33,55 +36,57 @@ export default () => {
         justifyContent: 'center',
         alignItems: 'center'
     }}>
-        <Box width='min-content'>
-            <Typography component="h2" width="max-content" display="flex" flexDirection="column" paddingBottom="1rem">
-                <Typography
-                    component="span"
-                    color="#8656cd"
-                    fontFamily="Montserrat"
-                    fontSize="3.5rem"
-                    lineHeight="3.5rem"
-                >
-                    TIMEGURU
+        <Fade in={true} timeout={400} onEntered={() => setMainFadeInDone(true)}>
+            <Box width='min-content'>
+                <Typography component="h2" width="max-content" display="flex" flexDirection="column" paddingBottom="1rem">
+                    <Typography
+                        component="span"
+                        color="#8656cd"
+                        fontFamily="Montserrat"
+                        fontSize="3.5rem"
+                        lineHeight="3.5rem"
+                    >
+                        TIMEGURU
+                    </Typography>
+                    <Typography
+                        component="span"
+                        color="#47a3bf"
+                        fontFamily="Montserrat"
+                        fontWeight="500"
+                        fontSize="3.5rem"
+                        lineHeight="3.5rem"
+                    >
+                        Calendar
+                    </Typography>
                 </Typography>
-                <Typography
-                    component="span"
-                    color="#47a3bf"
-                    fontFamily="Montserrat"
-                    fontWeight="500"
-                    fontSize="3.5rem"
-                    lineHeight="3.5rem"
-                >
-                    Calendar
+                <Typography fontSize="2.5rem" color="#B00084" fontWeight="700" lineHeight="3rem" marginBottom="1rem">
+                    Seamlessly manage events, appointments, and tasks in one place.
                 </Typography>
-            </Typography>
-            <Typography fontSize="2.5rem" color="#B00084" fontWeight="700" lineHeight="3rem" marginBottom="1rem">
-                Seamlessly manage events, appointments, and tasks in one place.
-            </Typography>
-            <Box display="flex" columnGap={{ xs: '5px', sm: "10px" }}>
-                <Button
-                    fullWidth
-                    variant={mode == 'signin' ? "contained" : "outlined"}
-                    onClick={() => setMode('signin')}
-                >
-                    Sign In
-                </Button>
-                <Button
-                    fullWidth
-                    variant={mode == 'signup' ? "contained" : "outlined"}
-                    onClick={() => setMode('signup')}
-                >
-                    Sign Up
-                </Button>
-                <Button
-                    fullWidth
-                    variant={mode == 'demo' ? "contained" : "outlined"}
-                    onClick={() => {setDemoMode({ email: 'demoemailaddress@demo.demo' })}}
-                >
-                    Demo
-                </Button>
+                <Box display="flex" columnGap={{ xs: '5px', sm: "10px" }}>
+                    <Button
+                        fullWidth
+                        variant={mode == 'signin' ? "contained" : "outlined"}
+                        onClick={() => setMode('signin')}
+                    >
+                        Sign In
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant={mode == 'signup' ? "contained" : "outlined"}
+                        onClick={() => setMode('signup')}
+                    >
+                        Sign Up
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant={mode == 'demo' ? "contained" : "outlined"}
+                        onClick={() => { setDemoMode({ email: 'demoemailaddress@demo.demo' }) }}
+                    >
+                        Demo
+                    </Button>
+                </Box>
             </Box>
-        </Box>
+        </Fade>
         {/* Following box displays the sign in/up pages and possibly the svg image.
         If screen is larger than or equal to md size then the image will be displayed.
         Otherwise it will be considered mobile view and the image will not be displayed. */}
@@ -103,7 +108,7 @@ export default () => {
             <Fade in={mode == 'signup'} timeout={500}>
                 <SignUp isMobile={mobile} onClickBack={onClickBack} />
             </Fade>
-            <Fade in={!mode} timeout={500}>
+            <Fade in={!mode && mainFadeInDone} timeout={500}>
                 <Box
                     component="img"
                     src={PersonUsingComputer}
@@ -111,6 +116,7 @@ export default () => {
                     gridColumn="1"
                     width="100%"
                     display={{ xs: 'none', md: 'block' }}
+                    style={{ transitionDelay: "2000" }}
                 />
             </Fade>
         </Box>
