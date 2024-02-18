@@ -12,9 +12,9 @@ import EventsManager from './eventsmanager';
 import DemoEventsManager from './demoeventsmanager';
 
 import CalendarControls from './CalendarControls';
-import MonthlyView from './MonthlyView';
-import CalendarEventViewer from './CalendarEventViewer';
-import CalendarEventEditor from './CalendarEventEditor';
+import MonthlyView from '../../components/Calendar/MonthlyView';
+import CalendarEventViewer from '../../components/Calendar/CalendarEventViewer';
+import CalendarEventEditor from '../../components/Calendar/CalendarEventEditor';
 
 interface CalenderProps extends BoxProps {
     backgroundcolors?: string[]

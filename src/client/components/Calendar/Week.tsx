@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import CalendarItem from './CalenderItem';
+import CalendarItem from './CalendarItem';
 import { CalendarEvent } from '../../../types';
 
 const colors = [

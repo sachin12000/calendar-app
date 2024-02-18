@@ -5,7 +5,7 @@ import Close from '@mui/icons-material/Close';
 
 import { CalendarEvent } from "../../../types";
 import { getDayOfDate } from "../../../util";
-import CalendarItem from "./CalenderItem";
+import CalendarItem from "./CalendarItem";
 
 interface DayProps {
     date: number // date number that is displayed at the top
